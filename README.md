@@ -30,5 +30,5 @@ To learn more about Next.js, take a look at the following resources:
 You can clone & create this repo with the following command
 
 ```bash
-npx create-next-app nextjs-prisma-auth --example "https://github.com/Dutrak/nextjs-sqlite-auth-template"
+npx create-next-app nextjs-prisma-auth --example "https://github.com/Dutrak/Nextjs-SQLite-Auth-Template"
 ```
