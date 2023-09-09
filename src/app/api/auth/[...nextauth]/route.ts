@@ -1,30 +1,29 @@
-import { NextAuthOptions} from "next-auth";
+import NextAuth, {type NextAuthOptions} from "next-auth";
 import  CredentialsProvider from "next-auth/providers/credentials";
 import { getPrismaClient } from "@lib/prisma";
-import { compare } from "bcryptjs";
-import NextAuth from "next-auth/next";
+import { compare } from "bcrypt";
 
 
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             credentials: {
-                username: { label: "Username", type: "text"},
+                email: { label: "Email", type: "email"},
                 password: { label: "Password", type: "password" }
             },
             /* @ts-ignore */
             async authorize(credentials) {
-                const {username, password} = credentials ?? {};
-                if (!username || !password) {
-                    throw new Error("Missing username or password");
+                const {email, password} = credentials ?? {};
+                if (!email || !password) {
+                    throw new Error("Missing email or password");
                 }
                 const user = await getPrismaClient().user.findUnique({
                     /* @ts-ignore */
-                    where: { username }
+                    where: { email }
                 });
                 
-                if (!user || await compare(password, user.password)) {
-                    throw new Error("Invalid username or password");
+                if (!user || !(await compare(password, user.password))) {
+                    throw new Error("Invalid email or password");
                 }
                 return user
             }

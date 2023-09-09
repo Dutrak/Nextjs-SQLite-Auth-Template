@@ -1,5 +1,4 @@
 'use client'
-
 import '../globals.css'
 
 import { Login } from "@/Components/Login"
